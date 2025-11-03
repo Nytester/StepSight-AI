@@ -1,0 +1,15 @@
+# Virtual environments
+stepsight-env/
+env/
+venv/
+backend/stepsight-env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# System files
+.DS_Store
+
+# Upload folders
+uploads/
