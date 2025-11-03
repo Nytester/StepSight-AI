@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StepSight AI - ACL Injury Risk Prediction</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <!-- ===== LANDING PAGE ===== -->
+    <div id="landingPage">
+        <div class="page-wrapper">
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Hero Section -->
+                <section class="hero">
+                    <div class="hero-content">
+                        <h1>StepSight AI</h1>
+                        <p>Advanced ACL Injury Risk Prediction Powered by Artificial Intelligence</p>
+                        <div class="hero-buttons">
+                            <button class="hero-btn hero-btn-primary" onclick="scrollToPortal()">Get Started</button>
+                            <button class="hero-btn hero-btn-secondary" onclick="scrollToFeatures()">Learn More</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Choose Portal Section -->
+                <section id="portalSection" style="background: white; padding: 60px 40px; border-radius: 20px; margin-bottom: 40px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);">
+                    <div style="text-align: center; margin-bottom: 50px;">
+                        <h2 style="font-size: 2.5rem; color: #1a1a1a; margin-bottom: 15px;">Choose Your Portal</h2>
+                        <p style="font-size: 1.1rem; color: #666;">Are you a healthcare professional or a patient?</p>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+                        <div class="login-box" onclick="openAuthModal('doctor')">
+                            <div class="login-icon">👨‍⚕️</div>
+                            <h2>Doctor Portal</h2>
+                            <p>Access patient assessments and generate clinical reports for your practice</p>
+                            <button class="login-btn doctor-btn">Sign In as Doctor</button>
+                        </div>
+
+                        <div class="login-box" onclick="openAuthModal('patient')">
+                            <div class="login-icon">👤</div>
+                            <h2>Patient Portal</h2>
+                            <p>Get your personalized ACL injury risk assessment and preventive guidance</p>
+                            <button class="login-btn patient-btn">Sign In as Patient</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Features Section -->
+                <section id="featuresSection" class="features-section">
+                    <h2>Why StepSight AI?</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">📊</div>
+                            <h3>Personalized Risk Score</h3>
+                            <p>Get unique ACL injury risk assessment based on comprehensive health profile</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🧠</div>
+                            <h3>AI-Powered Analysis</h3>
+                            <p>Advanced ML models trained on thousands of clinical cases</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">📄</div>
+                            <h3>Dual Reports</h3>
+                            <p>Clinical reports for doctors and simplified guides for patients</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🌍</div>
+                            <h3>Fully Remote</h3>
+                            <p>No sensors needed—complete assessment from your home</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">⚡</div>
+                            <h3>Instant Results</h3>
+                            <p>Get risk assessment in seconds with actionable insights</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🔒</div>
+                            <h3>Privacy Focused</h3>
+                            <p>Your data is secure with enterprise-grade encryption</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sports Risk Chart Section -->
+                <section class="sports-risk-section">
+                    <div class="section-header">
+                        <h2>ACL Injury Risk by Sport</h2>
+                        <p>Understanding which activities carry higher ACL injury risk can help you prepare better and take preventive measures</p>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="sportsRiskChart"></canvas>
+                    </div>
+
+                    <div class="risk-info">
+                        <div class="risk-info-card">
+                            <h4>🏀 Basketball - HIGH RISK</h4>
+                            <p>Frequent pivoting, sudden direction changes, and jumping create significant stress on ACL ligaments.</p>
+                        </div>
+                        <div class="risk-info-card">
+                            <h4>⚽ Soccer - HIGH RISK</h4>
+                            <p>Explosive cuts, rapid acceleration/deceleration, and physical contact increase injury vulnerability.</p>
+                        </div>
+                        <div class="risk-info-card">
+                            <h4>🎿 Skiing - HIGH RISK</h4>
+                            <p>High-speed descents combined with terrain hazards and equipment mechanics create substantial risk.</p>
+                        </div>
+                        <div class="risk-info-card">
+                            <h4>🏈 Football - MODERATE-HIGH</h4>
+                            <p>Powerful movements and collisions, especially for skill position players, elevate ACL injury risk.</p>
+                        </div>
+                        <div class="risk-info-card">
+                            <h4>🎾 Tennis - MODERATE</h4>
+                            <p>Quick lateral movements and court changes require explosive leg movement but with lower contact risk.</p>
+                        </div>
+                        <div class="risk-info-card">
+                            <h4>🏃 Running - LOW-MODERATE</h4>
+                            <p>Linear movement is lower risk, but training errors and overuse can still contribute to injury.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Testimonials Section -->
+                <section class="testimonials-section">
+                    <div class="testimonials-container">
+                        <div class="section-header">
+                            <h2>What Our Users Say</h2>
+                            <p>Join thousands of athletes and healthcare professionals who trust StepSight AI</p>
+                        </div>
+
+                        <div class="testimonials-carousel">
+                            <div class="testimonial-card active">
+                                <div class="testimonial-stars">★★★★★</div>
+                                <div class="testimonial-text">
+                                    "StepSight AI gave me the confidence to know where I stood with my ACL health. The personalized recommendations helped me prevent what could have been a serious injury. Incredible tool!"
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">SA</div>
+                                    <div class="author-info">
+                                        <h4>Sarah Anderson</h4>
+                                        <p>Professional Basketball Player</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="testimonial-card">
+                                <div class="testimonial-stars">★★★★★</div>
+                                <div class="testimonial-text">
+                                    "As a sports medicine doctor, I was impressed by the accuracy and depth of analysis. My patients love having a data-driven assessment, and it's become a valuable part of my practice."
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">DR</div>
+                                    <div class="author-info">
+                                        <h4>Dr. Michael Rodriguez</h4>
+                                        <p>Sports Medicine Specialist</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="testimonial-card">
+                                <div class="testimonial-stars">★★★★★</div>
+                                <div class="testimonial-text">
+                                    "After my ACL injury, StepSight AI helped me track my recovery progress. The follow-up assessments guided my rehabilitation perfectly. I'm back to soccer at 100%!"
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">JM</div>
+                                    <div class="author-info">
+                                        <h4>James Martinez</h4>
+                                        <p>College Soccer Athlete</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="testimonial-card">
+                                <div class="testimonial-stars">★★★★★</div>
+                                <div class="testimonial-text">
+                                    "Our athletic department implemented StepSight AI for all our teams. The risk scores have helped us identify and protect vulnerable athletes early. Game changer!"
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">EP</div>
+                                    <div class="author-info">
+                                        <h4>Emily Parker</h4>
+                                        <p>Athletic Director, D1 University</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="testimonial-card">
+                                <div class="testimonial-stars">★★★★★</div>
+                                <div class="testimonial-text">
+                                    "I used StepSight AI to understand my injury risk before trying competitive volleyball. The preventive exercises made such a difference in my performance and confidence!"
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">KS</div>
+                                    <div class="author-info">
+                                        <h4>Kira Singh</h4>
+                                        <p>Competitive Volleyball Player</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-controls">
+                            <button class="carousel-btn" onclick="prevTestimonial()">❮</button>
+                            
+                            <div class="carousel-indicators">
+                                <span class="indicator active" onclick="goToTestimonial(0)"></span>
+                                <span class="indicator" onclick="goToTestimonial(1)"></span>
+                                <span class="indicator" onclick="goToTestimonial(2)"></span>
+                                <span class="indicator" onclick="goToTestimonial(3)"></span>
+                                <span class="indicator" onclick="goToTestimonial(4)"></span>
+                            </div>
+
+                            <button class="carousel-btn" onclick="nextTestimonial()">❯</button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Quick Stats -->
+                <div class="sidebar-card">
+                    <h3>📊 By The Numbers</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number">2.5K+</span>
+                            <span class="stat-label">Assessments</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">89%</span>
+                            <span class="stat-label">Accuracy</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">Clinics</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">15</span>
+                            <span class="stat-label">Countries</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Features -->
+                <div class="sidebar-card">
+                    <h3>✨ Key Features</h3>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <span class="feature-icon">⚡</span>
+                            <span class="feature-text">Instant Risk Analysis</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🔒</span>
+                            <span class="feature-text">HIPAA Compliant</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📱</span>
+                            <span class="feature-text">Mobile Friendly</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📊</span>
+                            <span class="feature-text">Detailed Reports</span>
+                        </div>
+                    </div>
+                    <button class="sidebar-cta" onclick="scrollToPortal()">Get Started Free</button>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="sidebar-card">
+                    <h3>🔗 Quick Links</h3>
+                    <div class="quick-links">
+                        <a class="link-item" href="#about">📚 About Us</a>
+                        <a class="link-item" href="#research">🔬 Research</a>
+                        <a class="link-item" href="#faq">❓ FAQ</a>
+                        <a class="link-item" href="#blog">📝 Blog</a>
+                        <a class="link-item" href="#pricing">💰 Pricing</a>
+                    </div>
+                </div>
+
+                <!-- Support Contact -->
+                <div class="sidebar-card contact-box">
+                    <h3>💬 Need Help?</h3>
+                    <p>Our support team is available to answer your questions about our platform and services.</p>
+                    <a href="mailto:support@stepsightai.com">📧 support@stepsightai.com</a>
+                    <br>
+                    <a href="tel:+1-855-STEP-AI">📞 +1-855-7837-24</a>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2025 StepSight AI. Advancing sports medicine through artificial intelligence.</p>
+        </footer>
+    </div>
+
+    <!-- ===== AUTH MODAL ===== -->
+    <div id="authModal" class="auth-modal">
+        <div class="auth-form-box">
+            <button class="close-btn" onclick="closeAuthModal()">✕</button>
+            <h2 id="authTitle">Doctor Login</h2>
+            <p class="subtitle" id="authSubtitle">Enter your credentials to continue</p>
+            
+            <form id="authForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="auth-submit-btn">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== DOCTOR PORTAL APP ===== -->
+    <div id="doctorPortalApp" class="app-container">
+        <!-- Header -->
+        <header>
+            <h1>StepSight AI</h1>
+            <div class="user-info">
+                <div class="user-badge doctor">
+                    Doctor: <span id="doctorName"></span>
+                </div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </header>
+
+        <div class="container">
+            <!-- Navigation Tabs -->
+            <div class="portal-nav">
+                <button class="nav-tab active" onclick="showDoctorTab('assessment')">📋 Clinical Assessment</button>
+                <button class="nav-tab" onclick="showDoctorTab('mri')">🖼️ MRI Analysis</button>
+            </div>
+
+            <!-- TAB 1: CLINICAL ASSESSMENT -->
+            <div id="assessment-tab" class="doctor-tab active">
+                <!-- Doctor Dashboard Title -->
+                <div class="doctor-dashboard">
+                    <h2 class="dashboard-title">Doctor Dashboard</h2>
+                    <p style="color: #666; margin-bottom: 10px;">Welcome to your clinical assessment portal. Enter patient information below to generate ACL injury risk assessment.</p>
+                </div>
+
+                <!-- Patient Information Section -->
+                <section class="form-section">
+                    <h2>📋 Patient Information</h2>
+                    <div class="patient-info-box">
+                        <h3>Enter Patient Details</h3>
+                        <div class="info-grid">
+                            <div class="form-group">
+                                <label for="patientName">Patient Name</label>
+                                <input type="text" id="patientName" placeholder="Full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="patientID">Patient ID</label>
+                                <input type="text" id="patientID" placeholder="e.g., P-12345" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateOfBirth">Date of Birth</label>
+                                <input type="date" id="dateOfBirth" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactNumber">Contact Number</label>
+                                <input type="tel" id="contactNumber" placeholder="+1 (555) 000-0000">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Assessment Form -->
+                <section class="form-section">
+                    <h2>📊 Clinical Assessment Form</h2>
+                    <form id="doctorAssessmentForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <input type="number" id="age" min="10" max="100" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select id="gender" required>
+                                    <option value="">Select</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bmi">BMI</label>
+                                <input type="number" id="bmi" step="0.1" min="10" max="50" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sport">Primary Sport</label>
+                                <input type="text" id="sport" placeholder="e.g., Basketball, Soccer" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="training">Training Hours per Week</label>
+                                <input type="number" id="training" step="0.5" min="0" max="50" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fatigue">Fatigue Level (1-10)</label>
+                                <input type="range" id="fatigue" min="1" max="10" value="5">
+                                <div class="slider-value">Current: <span id="fatigueValue">5</span></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="flexibility">Flexibility Score (1-10)</label>
+                                <input type="range" id="flexibility" min="1" max="10" value="5">
+                                <div class="slider-value">Current: <span id="flexibilityValue">5</span></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pastInjury">Past ACL Injury?</label>
+                                <select id="pastInjury" required>
+                                    <option value="">Select</option>
+                                    <option value="no">No</option>
+                                    <option value="yes">Yes</option>
+                                </select>
+                            </div>
+
+                            <div class="button-group">
+                                <button type="submit" class="analyze-btn">Analyze Risk</button>
+                                <button type="reset" class="reset-btn">Clear Form</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Results Section -->
+                <section class="results-section" id="resultsSection">
+                    <div class="loading" id="loading">
+                        <div class="spinner"></div>
+                        <p>Analyzing patient data with AI...</p>
+                    </div>
+
+                    <div id="resultsContent" style="display: none;">
+                        <h2>📈 ACL Risk Assessment Report</h2>
+                        
+                        <div class="risk-score">
+                            <div class="risk-circle" id="riskCircle">
+                                <span id="riskScore">--</span>%
+                            </div>
+                            <div class="risk-label" id="riskLabel">Calculating...</div>
+                            <div class="risk-description" id="riskDescription"></div>
+                        </div>
+
+                        <div style="background: #f5f7fa; padding: 20px; border-radius: 12px; margin: 25px 0;">
+                            <h3 style="color: #667eea; margin-bottom: 15px;">📋 Clinical Recommendations</h3>
+                            <div id="recommendations" style="color: #666; line-height: 1.8;"></div>
+                        </div>
+
+                        <div class="download-buttons">
+                            <button class="download-btn" onclick="downloadReport('doctor')">
+                                📋 Clinical Report
+                            </button>
+                            <button class="download-btn" onclick="downloadReport('patient')">
+                                📄 Patient Report
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- TAB 2: MRI ANALYSIS -->
+            <div id="mri-tab" class="doctor-tab">
+                <div class="mri-container">
+                    <!-- MRI Header -->
+                    <div class="mri-header">
+                        <h2>🖼️ MRI Upload & Analysis</h2>
+                        <p>Upload patient MRI images for AI-powered analysis and detailed clinical assessment</p>
+                    </div>
+
+                    <div class="mri-content">
+                        <!-- Upload Section -->
+                        <div class="mri-upload-box">
+                            <h3>📤 Upload MRI Image</h3>
+
+                            <div class="drop-zone" id="dropZone">
+                                <div class="drop-zone-icon">📁</div>
+                                <p><strong>Click to upload or drag files here</strong></p>
+                                <p class="drop-zone-hint">Supported formats: JPG, PNG, DICOM</p>
+                            </div>
+
+                            <input type="file" id="fileInput" accept="image/*,.dcm" />
+
+                            <div class="file-info" id="fileInfo">
+                                <div class="file-name" id="fileName"></div>
+                                <div class="file-size" id="fileSize"></div>
+                            </div>
+
+                            <button type="button" class="mri-analyze-btn" id="analyzeBtn" disabled>
+    🔍 Analyze MRI
+</button>
+
+
+                            <div class="progress-bar" id="progressBar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+
+                            <div class="error-message" id="errorMessage"></div>
+                        </div>
+
+                        <!-- Analysis Section -->
+                        <div class="mri-analysis-box">
+                            <h3>📊 Analysis Results</h3>
+
+                            <div class="empty-state" id="emptyState">
+                                <div class="empty-state-icon">📋</div>
+                                <p>Upload an MRI image to see analysis results</p>
+                            </div>
+
+                            <div class="mri-loading" id="loadingState">
+                                <div class="spinner"></div>
+                                <p>Analyzing MRI image with AI...</p>
+                            </div>
+
+                            <div class="mri-analysis-content" id="analysisContent">
+                                <!-- Risk Score -->
+                                <div class="mri-score-box">
+                                    <div class="score-number" id="acuityScore">--</div>
+                                    <div class="score-label">Overall ACL Injury Risk Score</div>
+                                </div>
+
+                                <!-- Structural Findings -->
+                                <div class="mri-analysis-section">
+                                    <div class="section-title">🦵 Structural Findings</div>
+                                    <div id="structuralFindings"></div>
+                                </div>
+
+                                <!-- Tear Analysis -->
+                                <div class="mri-analysis-section">
+                                    <div class="section-title">🔍 Tear Analysis</div>
+                                    <div id="tearAnalysis"></div>
+                                </div>
+
+                                <!-- Surrounding Tissues -->
+                                <div class="mri-analysis-section">
+                                    <div class="section-title">🧬 Surrounding Tissues</div>
+                                    <div id="surroundingTissues"></div>
+                                </div>
+
+                                <!-- Severity Assessment -->
+                                <div class="mri-analysis-section">
+                                    <div class="section-title">⚠️ Severity Assessment</div>
+                                    <div id="severityAssessment"></div>
+                                </div>
+
+                                <!-- Treatment Recommendation -->
+                                <div class="mri-recommendation-box">
+                                    <strong>🎯 Recommended Treatment Plan:</strong>
+                                    <div id="treatmentPlan"></div>
+                                </div>
+
+                                <!-- Download Buttons -->
+                                <div class="mri-download-buttons">
+                                    <button class="mri-download-btn" onclick="downloadMRIReport('pdf')">
+                                        📄 Download Report
+                                    </button>
+                                    <button class="mri-download-btn" onclick="downloadMRIReport('email')">
+                                        📧 Email Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2025 StepSight AI. Clinical Assessment Portal for Healthcare Professionals.</p>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
