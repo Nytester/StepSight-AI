@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>StepSight AI – ACL Assessment Result</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        padding: 40px;
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(135deg,#eef2ff,#f8fafc);
+        color: #1e293b;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 40px;
+        border-radius: 28px;
+        background: rgba(255,255,255,0.6);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .title {
+        font-size: 34px;
+        font-weight: 800;
+        margin-bottom: 10px;
+        text-align: center;
+        color: #3a3ad9;
+    }
+
+    .subtitle {
+        text-align: center;
+        font-size: 16px;
+        color: #475569;
+        margin-bottom: 35px;
+    }
+
+    /* SCORE CIRCLE */
+    .score-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .score-circle {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: linear-gradient(145deg, #e2e8f0, #ffffff);
+        box-shadow: 8px 8px 20px #cbd5e1, -8px -8px 20px #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        font-weight: 800;
+        color: #fff;
+        animation: popIn 0.7s ease;
+    }
+
+    @keyframes popIn {
+        0%   { transform: scale(0.6); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    .risk-label {
+        margin-top: 12px;
+        font-size: 22px;
+        font-weight: 700;
+        color: #334155;
+    }
+
+    .risk-description {
+        text-align: center;
+        max-width: 700px;
+        margin: auto;
+        font-size: 16px;
+        color: #475569;
+    }
+
+    /* Download Buttons */
+    .download-buttons {
+        text-align: center;
+        margin-top: 35px;
+    }
+
+    .download-buttons button {
+        padding: 12px 26px;
+        margin: 10px;
+        border: none;
+        border-radius: 14px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 600;
+        color: white;
+        background: #4f46e5;
+        box-shadow: 3px 4px 12px rgba(79,70,229,0.3);
+        transition: 0.2s ease;
+    }
+
+    .download-buttons button:hover {
+        transform: translateY(-3px);
+        box-shadow: 5px 8px 20px rgba(79,70,229,0.35);
+    }
+
+    /* CARD SECTIONS */
+    .card {
+        margin-top: 35px;
+        padding: 25px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.65);
+        backdrop-filter: blur(15px);
+        box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+        animation: fadeIn 1s ease;
+    }
+
+    .card h2 {
+        font-size: 24px;
+        margin-bottom: 12px;
+        font-weight: 700;
+        color: #3a3ad9;
+    }
+
+    .yt-video {
+        width: 100%;
+        height: 330px;
+        border-radius: 18px;
+        margin-top: 15px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    
+    <h1 class="title">StepSight AI – ACL Risk Report</h1>
+    <p class="subtitle">AI-powered clinical analysis • Personalized prevention plan</p>
+
+    <!-- SCORE -->
+    <div class="score-wrapper">
+        <div id="scoreCircle" class="score-circle">--</div>
+        <div id="riskLabel" class="risk-label"></div>
+    </div>
+
+    <p id="riskDescription" class="risk-description"></p>
+
+    <!-- DOWNLOAD BUTTONS -->
+    <div class="download-buttons">
+        <button onclick="downloadReport('doctor')">📑 Clinical Report</button>
+        <button onclick="downloadReport('patient')">📄 Patient Report</button>
+    </div>
+
+    <!-- TRAINING PLAN -->
+    <div class="card">
+        <h2>🏋️ Personalized Training Plan</h2>
+        <p id="trainingPlanText">Loading...</p>
+    </div>
+
+    <!-- YOUTUBE -->
+    <div class="card">
+        <h2>🎥 Recovery Guidance Videos</h2>
+        <div id="youtubeContainer"></div>
+    </div>
+
+</div>
+
+<script src="js/script.js"></script>
+
+<script>
+    // Load stored results
+    const result = JSON.parse(localStorage.getItem("assessmentResult"));
+
+    const circle = document.getElementById("scoreCircle");
+    const label  = document.getElementById("riskLabel");
+    const desc   = document.getElementById("riskDescription");
+
+    // Fill basic UI
+    circle.textContent = result.score + "%";
+    label.textContent  = result.level;
+    desc.textContent   = result.description;
+
+    // Score Color
+    if (result.score < 30) {
+        circle.style.background = "linear-gradient(135deg,#22c55e,#16a34a)";
+    } 
+    else if (result.score < 60) {
+        circle.style.background = "linear-gradient(135deg,#facc15,#eab308)";
+    } 
+    else {
+        circle.style.background = "linear-gradient(135deg,#ef4444,#dc2626)";
+    }
+
+    // Training Plan (comes from script.js)
+    document.getElementById("trainingPlanText").innerHTML =
+        getTrainingPlan(result.score);
+
+    // YouTube Video Recommendation (comes from script.js)
+    document.getElementById("youtubeContainer").innerHTML = `
+        <iframe class="yt-video" 
+                src="${getYoutubeVideo(result.score)}" 
+                allowfullscreen>
+        </iframe>
+    `;
+</script>
+</body>
+</html>
